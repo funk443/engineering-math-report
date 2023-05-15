@@ -1,0 +1,106 @@
+#+TITLE: 工程數學分組報告
+#+AUTHOR: ID
+#+OPTIONS: toc:nil num:nil author:nil
+#+HTML_HEAD: <style>pre.src {color:white; background-color: black;}</style>
+
+* 三角波之傅立葉級數
+題目之原函數圖如下：
+[[file:part-1-original-plot.png]]
+
+我們可將原函數視為非週期函數 \(f(t) = |t|, t \in [-1, 1]\) 的半幅餘弦展開，由此
+我們可以得到 \(T = 2, \ell = \frac{T}{2} = 1\) 。
+
+接著將 \(f(t)\) 轉化成較易積分的形式：
+\begin{equation*}
+f(t) =
+\begin{cases}
+t, & t \in [0, 1] \\
+-t, & t \in [-1, 0]
+\end{cases}
+\end{equation*}
+
+並經過一些簡單的運算求出傅立葉級數如下：
+\begin{equation*}
+f(t) = \frac{1}{2} + \sum_{n = 1}^{\infty}(\frac{2 \cdot (\cos n \pi - 1)}{n^2
+\pi^2} \cdot \cos n \pi t)
+\end{equation*}
+
+** 以電腦繪製函數圖形
+:PROPERTIES:
+:header-args: :tangle "fourier-plot.lisp"
+:END:
+我們以 Common Lisp 產生數據點，並以 gnuplot 繪製圖形。
+
+首先定義繪圖範圍及取樣頻率，並依據這些產生 t 軸（即 x 軸）的資料點：
+#+begin_src lisp
+(defparameter *plot-range* '(-6 . 6))
+(defparameter *sampling-rate* 20000)
+(defparameter *t* (loop for i from (car *plot-range*) upto (cdr *plot-range*)
+                          by (/ *sampling-rate*)
+                        collect i))
+#+end_src
+
+接著將剛剛計算出來的傅立葉級數以程式函數的形式寫出來：
+#+begin_src lisp
+(declaim (ftype (function (number fixnum) number) inside-sigma)
+         (inline inside-sigma))
+(defun inside-sigma (tt n)
+  (/ (* 2 (- (cos (* n pi)) 1) (cos (* n pi tt)))
+     (* (expt pi 2) (expt n 2))))
+
+(declaim (ftype (function (number &optional fixnum) number) f)
+         (inline f))
+(defun f (tt &optional (n 5))
+  (+ 1/2 (loop for i from 1 upto n
+               sum (inside-sigma tt i))))
+#+end_src
+
+有了函式後便可開始計算 y 軸的資料點，這裡我們分別計算展開式前四項的資料點，最後
+將他們加總得到我們想要的資料：
+#+begin_src lisp
+(defparameter *term1* (map 'list (lambda (x) (f x 0)) *t*))
+(defparameter *term2* (map 'list (lambda (x) (inside-sigma x 1)) *t*))
+(defparameter *term3* (map 'list (lambda (x) (inside-sigma x 2)) *t*))
+(defparameter *term4* (map 'list (lambda (x) (inside-sigma x 3)) *t*))
+(defparameter *y* (map 'list #'+ *term1* *term2* *term3* *term4*))
+#+end_src
+
+接著我們就可以將所產生出的繪圖資料存到檔案中：
+#+begin_src lisp
+(defparameter output-file "plot-data.txt")
+(with-open-file (s output-file :direction :output
+                               :if-exists :supersede
+                               :if-does-not-exist :create)
+  (loop initially (format s "# x y term1 term2 term3 term4~%")
+        for x in *t*
+        for y in *y*
+        for term1 in *term1*
+        for term2 in *term2*
+        for term3 in *term3*
+        for term4 in *term4*
+        do (format s "~@{~f~^ ~}~%" x y term1 term2 term3 term4)))
+#+end_src
+
+以 gnuplot 將圖形畫出：
+#+begin_src fundamental :tangle "plot.gp"
+set xlabel "t" 
+set ylabel "y"
+set xzeroaxis
+set yzeroaxis
+set size ratio -1
+set yrange [-2:2]
+set terminal svg font "IBM Plex Mono, 8" size 800, 400 dynamic
+set output "fourier.svg"
+
+plot "plot-data.txt" using 1:2 with lines linewidth 3 title "f(t)", \
+     "plot-data.txt" using 1:3 with lines title "term1", \
+     "plot-data.txt" using 1:4 with lines title "term2", \
+     "plot-data.txt" using 1:5 with lines title "term3", \
+     "plot-data.txt" using 1:6 with lines title "term4", \
+     
+#+end_src
+
+圖形如下：
+[[file:fourier.svg]]
+
+* 傅立葉分析之應用——頌哈吉-施特拉森演算法（Schönhage-Strassen algorithm）
