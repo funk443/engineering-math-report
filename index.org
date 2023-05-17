@@ -4,7 +4,7 @@
 #+HTML_HEAD: <style>pre.src {color:white; background-color: black;}</style>
 
 * 三角波之傅立葉級數
-題目之原函數圖如下：
+題目之原函數圖如下：\\
 [[file:part-1-original-plot.png]]
 
 我們可將原函數視為非週期函數 \(f(t) = |t|, t \in [-1, 1]\) 的半幅餘弦展開，由此
@@ -391,11 +391,11 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
 原始圖：
 [[file:test-image.png]]
 
-灰階後：
-[[file:test-image-greyscale.png]]
-
 頻譜圖：
 [[file:spectrum.png]]
+
+灰階後：
+[[file:test-image-greyscale.png]]
 
 捨去 50% 的資料後的壓縮圖：
 [[file:output50.png]]
@@ -410,11 +410,11 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
 原始圖：
 [[file:test-image2.png]]
 
-灰階後：
-[[file:test-image2-grey.png]]
-
 頻譜圖：
 [[file:spectrum2.png]]
+
+灰階後：
+[[file:test-image2-grey.png]]
 
 捨去 50% 的資料後的壓縮圖：
 [[file:output2-50.png]]
