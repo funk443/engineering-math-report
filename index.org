@@ -367,3 +367,19 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
 
 捨去 99% 的資料後：
 [[file:output99.png]]
+
+-----
+原始圖：
+[[file:test-image2.png]]
+
+灰階後：
+[[file:test-image2-grey.png]]
+
+捨去 50% 的資料後的壓縮圖：
+[[file:output2-50.png]]
+
+捨去 70% 的資料後：
+[[file:output2-70.png]]
+
+捨去 99% 的資料後：
+[[file:output2-99.png]]

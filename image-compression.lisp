@@ -99,7 +99,7 @@
                           (min (floor (nth w (nth h list))) 255)))
         finally (return image)))
 
-(defvar *original-image* (with-open-file (s "test-image.png"
+(defvar *original-image* (with-open-file (s "test-image2.png"
                                             :element-type '(unsigned-byte 8))
                            (png:decode s)))
 
@@ -129,7 +129,7 @@
   (map 'list (lambda (list) (map 'list #'abs list)) *ifft-list*))
 
 (defparameter *output-image* (list-to-greyscale *output-image-list*))
-(with-open-file (s "output.png" :direction :output
+(with-open-file (s "output2-99.png" :direction :output
                                 :element-type '(unsigned-byte 8)
                                 :if-exists :supersede
                                 :if-does-not-exist :create)
