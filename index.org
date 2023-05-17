@@ -3,6 +3,8 @@
 #+OPTIONS: toc:nil num:nil author:nil \n:nil
 #+HTML_HEAD: <style>pre.src {color:white; background-color: black;}</style>
 
+[[https://github.com/funk443/engineering-math-report][Github Repo]]
+
 * 三角波之傅立葉級數
 題目之原函數圖如下：\\
 [[file:part-1-original-plot.png]]

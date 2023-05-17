@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-05-17 Wed 10:34 -->
+<!-- 2023-05-17 Wed 10:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>工程數學分組報告</title>
@@ -229,10 +229,13 @@
 <body>
 <div id="content" class="content">
 <h1 class="title">工程數學分組報告</h1>
+<p>
+<a href="https://github.com/funk443/engineering-math-report">Github Repo</a>
+</p>
 
-<div id="outline-container-orgcb8272f" class="outline-2">
-<h2 id="orgcb8272f">三角波之傅立葉級數</h2>
-<div class="outline-text-2" id="text-orgcb8272f">
+<div id="outline-container-orgc7716db" class="outline-2">
+<h2 id="orgc7716db">三角波之傅立葉級數</h2>
+<div class="outline-text-2" id="text-orgc7716db">
 <p>
 題目之原函數圖如下：<br />
 <img src="part-1-original-plot.png" alt="part-1-original-plot.png" />
@@ -263,9 +266,9 @@ f(t) = \frac{1}{2} + \sum_{n = 1}^{\infty}(\frac{2 \cdot (\cos n \pi - 1)}{n^2
 \end{equation*}
 </div>
 
-<div id="outline-container-orgc7d672a" class="outline-3">
-<h3 id="orgc7d672a">以電腦繪製函數圖形</h3>
-<div class="outline-text-3" id="text-orgc7d672a">
+<div id="outline-container-org7f7cb4d" class="outline-3">
+<h3 id="org7f7cb4d">以電腦繪製函數圖形</h3>
+<div class="outline-text-3" id="text-org7f7cb4d">
 <p>
 我們以 Common Lisp 產生數據點，並以 gnuplot 繪製圖形。
 </p>
@@ -362,9 +365,9 @@ plot "plot-data.txt" using 1:2 with lines linewidth 3 title "f(t)", \
 </div>
 </div>
 
-<div id="outline-container-orga8fc42d" class="outline-2">
-<h2 id="orga8fc42d">傅立葉分析之應用實作——圖片壓縮</h2>
-<div class="outline-text-2" id="text-orga8fc42d">
+<div id="outline-container-org1dca1a3" class="outline-2">
+<h2 id="org1dca1a3">傅立葉分析之應用實作——圖片壓縮</h2>
+<div class="outline-text-2" id="text-org1dca1a3">
 <p>
 我們將以 Common Lisp 來嘗試實作。
 </p>
@@ -378,9 +381,9 @@ plot "plot-data.txt" using 1:2 with lines linewidth 3 title "f(t)", \
 </div>
 </div>
 
-<div id="outline-container-orgd65b603" class="outline-3">
-<h3 id="orgd65b603">快速傅立葉變換（Fast Fourier Transform, FFT）</h3>
-<div class="outline-text-3" id="text-orgd65b603">
+<div id="outline-container-org86c323f" class="outline-3">
+<h3 id="org86c323f">快速傅立葉變換（Fast Fourier Transform, FFT）</h3>
+<div class="outline-text-3" id="text-org86c323f">
 <p>
 雖然有快速傅立葉變換的函式庫可以使用，不過我們認為它使用起來不太順手，且我們想更
 了解快速傅立葉變換的演算法是如何實作的，因此我們選擇自己來實作傅立葉變換的演算法。
@@ -471,9 +474,9 @@ plot "plot-data.txt" using 1:2 with lines linewidth 3 title "f(t)", \
 </div>
 </div>
 
-<div id="outline-container-orgf8d1da6" class="outline-3">
-<h3 id="orgf8d1da6">反快速傅立葉變換（Inverse Fast Fourier Transform, IFFT）</h3>
-<div class="outline-text-3" id="text-orgf8d1da6">
+<div id="outline-container-orgae88f77" class="outline-3">
+<h3 id="orgae88f77">反快速傅立葉變換（Inverse Fast Fourier Transform, IFFT）</h3>
+<div class="outline-text-3" id="text-orgae88f77">
 <p>
 IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 \(\omega\) 和最後的結果
 要除以 n。所以這裡就不多做說明
@@ -516,9 +519,9 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
 </div>
 </div>
 
-<div id="outline-container-orgfd28fa6" class="outline-3">
-<h3 id="orgfd28fa6">二維傅立葉變換</h3>
-<div class="outline-text-3" id="text-orgfd28fa6">
+<div id="outline-container-org96d9eaa" class="outline-3">
+<h3 id="org96d9eaa">二維傅立葉變換</h3>
+<div class="outline-text-3" id="text-org96d9eaa">
 <p>
 由於圖片是二維的，所以我們需要使用二維傅立葉變換。我們這裡將圖片視為一個 \(m
 \times n\) 的矩陣，矩陣中的每個元素相當於圖片在該點的亮度。而如果我們想對這個矩
@@ -572,9 +575,9 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
 </div>
 </div>
 
-<div id="outline-container-orgaeab2e7" class="outline-3">
-<h3 id="orgaeab2e7">圖片處理</h3>
-<div class="outline-text-3" id="text-orgaeab2e7">
+<div id="outline-container-org0d4b225" class="outline-3">
+<h3 id="org0d4b225">圖片處理</h3>
+<div class="outline-text-3" id="text-org0d4b225">
 <p>
 雖然這個圖片壓縮的方法可以應用在彩色的圖片上，不過採用灰階圖片來做概念驗證較為方
 便，所以我們會先將讀進來的圖片轉成灰階的格式。
@@ -633,9 +636,9 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
 </div>
 </div>
 
-<div id="outline-container-org3e8b9e0" class="outline-3">
-<h3 id="org3e8b9e0">實際操作</h3>
-<div class="outline-text-3" id="text-org3e8b9e0">
+<div id="outline-container-orgf4df401" class="outline-3">
+<h3 id="orgf4df401">實際操作</h3>
+<div class="outline-text-3" id="text-orgf4df401">
 <p>
 接著我們便可以開始對圖片進行壓縮，首先讀入原始圖片：
 </p>
@@ -753,9 +756,9 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
 </div>
 </div>
 
-<div id="outline-container-orgdaa721d" class="outline-3">
-<h3 id="orgdaa721d">結果</h3>
-<div class="outline-text-3" id="text-orgdaa721d">
+<div id="outline-container-org22f8d98" class="outline-3">
+<h3 id="org22f8d98">結果</h3>
+<div class="outline-text-3" id="text-org22f8d98">
 <p>
 原始圖：
 <img src="test-image.png" alt="test-image.png" />
@@ -821,7 +824,7 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2023-05-17 Wed 10:34</p>
+<p class="date">Created: 2023-05-17 Wed 10:49</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
