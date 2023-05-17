@@ -367,6 +367,10 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
        *transformed-list*))
 #+end_src
 
+在聽完別組報告後我才發現我整晚沒睡原來是土法煉鋼了一個高通/低通高斯濾波器，只要
+把上面的 ~(> (abs x) *threshold​*)~ 改成 ~(< (abs x) *threshold​*)~ 就是一個高通濾
+波器了。不過高通濾波器濾出來的振幅較弱，需要在最後再將他們放大即可。
+
 將過濾後的列表做二維的反傅立葉變換，來換得圖片的資料：
 #+begin_src lisp
 (defparameter *ifft-list* (ft2 *filtered-list* #'ifft))
