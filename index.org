@@ -1,6 +1,6 @@
 #+TITLE: 工程數學分組報告
 #+AUTHOR: ID
-#+OPTIONS: toc:nil num:nil author:nil
+#+OPTIONS: toc:nil num:nil author:nil \n:nil
 #+HTML_HEAD: <style>pre.src {color:white; background-color: black;}</style>
 
 * 三角波之傅立葉級數
