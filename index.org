@@ -233,6 +233,27 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
   (transpose (map 'list f (transpose (map 'list f m)))))
 #+end_src
 
+這個函式可以將二維頻譜四邊的訊號移到中央，類似於 Octave 中的 ~fftshift~ 函式的功
+能：
+#+begin_src lisp
+(defun fft-shift (m)
+  (transpose
+   (map 'list
+        (lambda (list)
+          (let* ((middle (floor (list-length list) 2))
+                 (first-half (subseq list 0 middle))
+                 (second-half (subseq list middle)))
+            (append second-half first-half)))
+        (transpose
+         (map 'list
+              (lambda (list)
+                (let* ((middle (floor (list-length list) 2))
+                       (first-half (subseq list 0 middle))
+                       (second-half (subseq list middle)))
+                  (append second-half first-half)))
+              m)))))
+#+end_src
+
 ** 圖片處理
 雖然這個圖片壓縮的方法可以應用在彩色的圖片上，不過採用灰階圖片來做概念驗證較為方
 便，所以我們會先將讀進來的圖片轉成灰階的格式。
@@ -308,6 +329,20 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
 (defparameter *transformed-list* (ft2 *original-image-grey-list*))
 #+end_src
 
+我們可以接著畫出所變換出的頻譜圖：
+#+begin_src lisp
+(defparameter *spectrum*
+  (list-to-greyscale
+   (map 'list (lambda (list)
+                (map 'list (lambda (x) (* 10 (log (abs x)))) list))
+        (fft-shift *transformed-list*))))
+(with-open-file (s "spectrum.png" :direction :output
+                                  :element-type '(unsigned-byte 8)
+                                  :if-exists :supersede
+                                  :if-does-not-exist :create)
+  (png:encode *spectrum* s))
+#+end_src
+
 而這個圖片壓縮演算法是一種破壞性的壓縮算法，意即在壓縮過程中，我們需要丟掉一些資
 料。而我們可以通過一個閥值來決定我們要丟掉多少資料：
 #+begin_src lisp
@@ -359,6 +394,9 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
 灰階後：
 [[file:test-image-greyscale.png]]
 
+頻譜圖：
+[[file:spectrum.png]]
+
 捨去 50% 的資料後的壓縮圖：
 [[file:output50.png]]
 
@@ -374,6 +412,9 @@ IFFT 的演算法其實跟 FFT 的演算法非常相似，它們間只有差在 
 
 灰階後：
 [[file:test-image2-grey.png]]
+
+頻譜圖：
+[[file:spectrum2.png]]
 
 捨去 50% 的資料後的壓縮圖：
 [[file:output2-50.png]]
